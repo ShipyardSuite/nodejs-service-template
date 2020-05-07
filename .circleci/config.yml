@@ -6,9 +6,18 @@ jobs:
     working_directory: ~/build
     steps:
       - checkout
+
+      # Install dependencies
       - run:
           name: "install dependencies"
           command: "npm install"
+
+      # Run tests
       - run:
           name: "run tests"
           command: "npm test"
+      # upload test coverage...
+      # push image to dockerhub...
+      # deploy image to digitalocean...
+      # update image...
+      # start new container...
