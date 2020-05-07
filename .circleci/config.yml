@@ -10,6 +10,7 @@ jobs:
   test:
     docker:
       - image: circleci/node:8
+    working_directory: ~/build
     steps:
       - checkout
       - run: npm test
