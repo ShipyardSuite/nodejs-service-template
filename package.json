@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-service-template",
+  "version": "0.1.0",
+  "description": "service template for nodejs applications.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShipyardSuite/nodejs-service-template.git"
+  },
+  "keywords": [],
+  "author": "Shipyard Suite <shipyardsuite@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ShipyardSuite/nodejs-service-template/issues"
+  },
+  "homepage": "https://github.com/ShipyardSuite/nodejs-service-template#readme",
+  "dependencies": {
+    "express": "4.17.1"
+  }
+}
