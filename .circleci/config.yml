@@ -6,11 +6,25 @@ jobs:
     working_directory: ~/build
     steps:
       - checkout
-      - run: npm install
-      
-      - run: npm test
+      - run:
+        name: Install dependencies
+        command: npm install
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run: 
+        name: Test service
+        command: npm test
 workflows:
   version: 2
   commit:
     jobs:
       - build
+      - test:
+        requires:
+          - build
+        filters:
+          branches: 
+            only: develop
