@@ -1,13 +1,13 @@
 'use strict';
 
+const { exampleFunction } = require('./../src/example');
+
 const expect = require('chai').expect;
 
-describe('Test Example', function () {
-    describe('example', function () {
-        it('tries to prove that 1 is not 2', function () {
-            const testValue = 1;
-
-            expect(testValue).to.not.equal(2);
+describe('Example', function () {
+    describe('exampleFunction()', function () {
+        it('output should equal "example-service"', function () {
+            expect(exampleFunction()).to.equal("example-service");
         });
     });
 });
