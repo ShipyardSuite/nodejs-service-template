@@ -7,9 +7,5 @@ jobs:
     steps:
       - checkout
       - run:
-        name: "install dependencies"
-        command: "npm install"
-
-      - run:
-        name: "run tests"
-        command: "npm test"
+          name: "install dependencies"
+          command: "npm install"
