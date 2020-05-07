@@ -8,6 +8,13 @@ jobs:
     steps:
       - checkout
       - run: npm install
+  test:
+    docker:
+      - image: circleci/node:8
+    working_directory: ~/build
+    steps:
+      - checkout
+      - run: npm install
       - run: npm test
         
 workflows:
@@ -15,3 +22,4 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - test
