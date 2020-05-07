@@ -1,5 +1,5 @@
 const express = require('express')
-const { exampleFunction } = require('./example');
+const { exampleFunction } = require('./utils/example');
 
 const app = express()
 const port = 3000

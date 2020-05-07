@@ -1,6 +1,6 @@
 'use strict';
 
-const { exampleFunction } = require('./../src/example');
+const { exampleFunction } = require('./../src/utils/example');
 
 const expect = require('chai').expect;
 
