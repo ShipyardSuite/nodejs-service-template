@@ -2,9 +2,9 @@
 
 const expect = require('chai').expect;
 
-describe('Math', function () {
-    describe('randomNumberArrayLength()', function () {
-        it('selects a random number by array length', function () {
+describe('Test Example', function () {
+    describe('example', function () {
+        it('tries to prove that 1 is not 2', function () {
             const testValue = 1;
 
             expect(testValue).to.not.equal(2);
