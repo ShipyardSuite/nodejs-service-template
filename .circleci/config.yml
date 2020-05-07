@@ -6,10 +6,6 @@ jobs:
     working_directory: ~/build
     steps:
       - checkout
-      - run:
-        name: "install dependencies"
-        command: "npm install"
-
-      - run:
-        name: "run tests"
-        command: "npm test"
+      - run: npm install
+ 
+      - run: npm test
