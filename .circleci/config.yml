@@ -2,14 +2,26 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
     working_directory: ~/build
     steps:
       - checkout
-      - run:
-        name: "install dependencies"
-        command: "npm install"
 
+      # Install dependencies
       - run:
-        name: "run tests"
-        command: "npm test"
+          name: "install dependencies"
+          command: "npm install"
+
+      # Run tests
+      - run:
+          name: "run tests"
+          command: "npm test"
+
+      # upload test coverage...
+      - run:
+          name: "upload test coverage"
+          command: "bash <(curl -s https://codecov.io/bash)"
+      # push image to dockerhub...
+      # deploy image to digitalocean...
+      # update image...
+      # start new container...
