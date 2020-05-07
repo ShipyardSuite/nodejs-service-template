@@ -3,13 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:8
-    working_directory: ~/build
-    steps:
-      - checkout
-      - run: npm install
-  test:
-    docker:
-      - image: circleci/node:8
+      - image: mongo:3.4.4
     working_directory: ~/build
     steps:
       - checkout
@@ -21,4 +15,3 @@ workflows:
   build_and_test:
     jobs:
       - build
-      - test
