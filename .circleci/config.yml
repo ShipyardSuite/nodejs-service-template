@@ -1,9 +1,15 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  docker-publisher:
+    environment:
+      IMAGE_NAME: jonathancardoso/building-on-ci
     docker:
       - image: circleci/node:10
     working_directory: ~/build
+
+jobs:
+  build:
+    executor: docker-publisher
     steps:
       - checkout
 
@@ -25,6 +31,8 @@ jobs:
       # deploy image to digitalocean...
       # update image...
       # start new container...
+
+
 
 # version: 2.1
 # executors:
