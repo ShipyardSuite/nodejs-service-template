@@ -95,7 +95,7 @@ jobs:
       # deploy image to digitalocean...
       - run: 
           command: |
-            ssh -oStrictHostKeyChecking=no -v circleci@$ip 
+            ssh -oStrictHostKeyChecking=no -v circleci@$ip |
             echo testtesttest
 
 
