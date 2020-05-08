@@ -88,10 +88,16 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:develop
 
-      # push image to dockerhub...
+  deploy:
+    executor: docker-publisher
+    steps:
+
       # deploy image to digitalocean...
+      - run: ssh -oStrictHostKeyChecking=no -v circleci@$ip "./deploy_project.sh"
+         
       # update image...
       # start new container...
+
 
 workflows:
   version: 2
@@ -104,6 +110,10 @@ workflows:
           context: dockerhub
           requires:
             - build
+      - deploy:
+          context: digitalocean-develop
+          requires:
+            - publish
 
 # version: 2.1
 # executors:
