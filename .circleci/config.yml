@@ -96,7 +96,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip 
-            echo "testtesttest"
+            "echo testtesttest"
 
 
 workflows:
@@ -104,8 +104,12 @@ workflows:
   workflow:
     jobs:
       - test
-      - coverage
-      - build
+      - coverage:
+          requires:
+            - test
+      - build:
+          requires:
+            - test
       - publish:
           context: dockerhub
           requires:
