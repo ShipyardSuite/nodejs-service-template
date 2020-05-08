@@ -93,7 +93,10 @@ jobs:
     steps:
 
       # deploy image to digitalocean...
-      - run: ssh -oStrictHostKeyChecking=no -v circleci@$ip "./deploy_project.sh"
+      - run: 
+          command: |
+          ssh -oStrictHostKeyChecking=no -v circleci@$ip 
+          echo "testtesttest"
          
       # update image...
       # start new container...
@@ -114,101 +117,3 @@ workflows:
           context: digitalocean-develop
           requires:
             - publish
-
-# version: 2.1
-# executors:
-#   docker-publisher:
-#     environment:
-#       IMAGE_NAME: jonathancardoso/building-on-ci
-#     docker:
-#       - image: circleci/node:10
-# jobs:
-#   test:
-#     executor: docker-publisher
-#     steps:
-#       - checkout
-#       - setup_remote_docker
-      
-#       # Install dependencies
-#       - run:
-#           name: "install dependencies"
-#           command: "npm install"
-      
-#       # Run tests
-#       - run:
-#           name: "run tests"
-#           command: "npm test"
-
-#       # upload test coverage...
-#       - run:
-#           name: "upload test coverage"
-#           command: "bash <(curl -s https://codecov.io/bash)"
-
-#   build:
-#     executor: docker-publisher
-#     steps:
-#       - checkout
-#       - setup_remote_docker
-
-#       # Install dependencies
-#       - run:
-#           name: "install dependencies"
-#           command: "npm install"
-
-#       # Build Docker image
-#       - run:
-#           name: Build Docker image
-#           command: docker build -t $IMAGE_NAME:develop .
-
-#       # Archive Docker image
-#       - run:
-#           name: Archive Docker image
-#           command: docker save -o image.tar $IMAGE_NAME
-#       - persist_to_workspace:
-#           root: .
-#           paths:
-#             - ./image.tar
-
-#   publish-develop:
-#     executor: docker-publisher
-#     steps:
-#       - attach_workspace:
-#           at: /tmp/workspace
-#       - setup_remote_docker
-
-#       # Load archived Docker image
-#       - run:
-#           name: Load archived Docker image
-#           command: docker load -i /tmp/workspace/image.tar
-      
-#       # Publish Image to DockerHub
-#       - run:
-#           name: Publish Image to DockerHub
-#           command: |
-#             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-#             docker push $IMAGE_NAME:develop
-
-#       # deploy image to digitalocean...
-#       # update image...
-#       # start new container...
-
-# workflows:
-#   version: 2.1
-#   build-develop:
-#     jobs:
-#       - test: 
-#           filters:
-#             branches:
-#               only: develop
-#       - build:
-#           requires:
-#             - test
-#           filters:
-#             branches:
-#               only: develop
-#       - publish-develop:
-#           requires:
-#             - build
-#           filters:
-#             branches:
-#               only: develop
