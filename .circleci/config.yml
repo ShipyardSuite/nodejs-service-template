@@ -1,11 +1,33 @@
-version: 2
-jobs:
-  build:
+version: 2.1
+executors:
+  docker-publisher:
+    environment:
+      IMAGE_NAME: shipyardsuite/nodejs-service-template
     docker:
       - image: circleci/node:10
-    working_directory: ~/build
+
+jobs:
+  test:
+    executor: docker-publisher
     steps:
       - checkout
+      - setup_remote_docker
+      
+      # Install dependencies
+      - run:
+          name: "install dependencies"
+          command: "npm install"
+
+      # Run tests
+      - run:
+          name: "run tests"
+          command: "npm test"
+
+  coverage: 
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
 
       # Install dependencies
       - run:
@@ -21,7 +43,78 @@ jobs:
       - run:
           name: "upload test coverage"
           command: "bash <(curl -s https://codecov.io/bash)"
-      # push image to dockerhub...
+
+  build:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+      
+      # Install dependencies
+      - run:
+          name: "install dependencies"
+          command: "npm install"
+      
+      # Build Docker image
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:develop .
+      
+      # Archive Docker image
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+
+  publish:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+
+      # Load archived Docker image
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      
+      # Publish Image to DockerHub
+      - run:
+          name: Publish Image to DockerHub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:develop
+
+  deploy:
+    executor: docker-publisher
+    steps:
+
       # deploy image to digitalocean...
-      # update image...
-      # start new container...
+      - run: 
+          command: |
+            ssh -oStrictHostKeyChecking=no -v circleci@$ip \
+            echo testtesttest
+
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test
+      - coverage:
+          requires:
+            - test
+      - build:
+          requires:
+            - test
+      - publish:
+          context: dockerhub
+          requires:
+            - build
+      - deploy:
+          context: digitalocean-develop
+          requires:
+            - publish
