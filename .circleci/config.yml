@@ -8,7 +8,7 @@ executors:
     working_directory: ~/build
 
 jobs:
-  install:
+  test:
     executor: docker-publisher
     steps:
       - checkout
@@ -16,14 +16,8 @@ jobs:
 
       # Install dependencies
       - run:
-          name: "install dependencies"
-          command: "npm install"
-
-  test:
-    executor: docker-publisher
-    steps:
-      - checkout
-      - setup_remote_docker
+        name: "install dependencies"
+        command: "npm install"
 
       # Run tests
       - run:
@@ -38,6 +32,17 @@ jobs:
       # deploy image to digitalocean...
       # update image...
       # start new container...
+
+  build:
+    executor: docker-publisher
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      # Install dependencies
+      - run:
+          name: "install dependencies"
+          command: "echo hello"
     
 
 
