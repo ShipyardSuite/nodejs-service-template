@@ -30,10 +30,10 @@ jobs:
       - checkout
       - setup_remote_docker
 
-    # upload test coverage...
-    - run:
-      name: "upload test coverage"
-      command: "bash <(curl -s https://codecov.io/bash)"
+      # upload test coverage...
+      - run:
+          name: "upload test coverage"
+          command: "bash <(curl -s https://codecov.io/bash)"
 
   build:
     executor: docker-publisher
