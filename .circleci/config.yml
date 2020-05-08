@@ -95,11 +95,8 @@ jobs:
       # deploy image to digitalocean...
       - run: 
           command: |
-          ssh -oStrictHostKeyChecking=no -v circleci@$ip 
-          echo "testtesttest"
-         
-      # update image...
-      # start new container...
+            ssh -oStrictHostKeyChecking=no -v circleci@$ip 
+            echo "testtesttest"
 
 
 workflows:
