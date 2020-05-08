@@ -24,6 +24,11 @@ jobs:
           name: "run tests"
           command: "npm test"
 
+      # upload test coverage...
+      - run:
+          name: "upload test coverage"
+          command: "bash <(curl -s https://codecov.io/bash)"
+
   build:
     executor: docker-publisher
     steps:
@@ -35,19 +40,17 @@ jobs:
           name: "install dependencies"
           command: "npm install"
 
-      # Run tests
-      - run:
-          name: "run tests"
-          command: "npm test"
-
-      # upload test coverage...
-      - run:
-          name: "upload test coverage"
-          command: "bash <(curl -s https://codecov.io/bash)"
       # push image to dockerhub...
       # deploy image to digitalocean...
       # update image...
       # start new container...
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+      - test
+      - build
 
 # version: 2.1
 # executors:
