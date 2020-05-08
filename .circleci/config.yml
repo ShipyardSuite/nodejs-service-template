@@ -76,7 +76,7 @@ jobs:
       # start new container...
 
 workflows:
-  version: 2
+  version: 2.1
   build-develop:
     jobs:
       - test: 
