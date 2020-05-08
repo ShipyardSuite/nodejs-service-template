@@ -5,7 +5,6 @@ executors:
       IMAGE_NAME: jonathancardoso/building-on-ci
     docker:
       - image: circleci/node:10
-    working_directory: ~/build
 
 jobs:
   test:
@@ -55,6 +54,39 @@ jobs:
       - run:
           name: "install dependencies"
           command: "npm install"
+      
+      # Build Docker image
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:develop .
+      
+      Archive Docker image
+      - run:
+          name: Archive Docker image
+          command: docker save -o image.tar $IMAGE_NAME
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./image.tar
+
+  push:
+    executor: docker-publisher
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - setup_remote_docker
+
+      # Load archived Docker image
+      - run:
+          name: Load archived Docker image
+          command: docker load -i /tmp/workspace/image.tar
+      
+      # Publish Image to DockerHub
+      - run:
+          name: Publish Image to DockerHub
+          command: |
+            echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+            docker push $IMAGE_NAME:develop
 
       # push image to dockerhub...
       # deploy image to digitalocean...
@@ -68,6 +100,7 @@ workflows:
       - test
       - coverage
       - build
+      - push
 
 # version: 2.1
 # executors:
