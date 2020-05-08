@@ -69,7 +69,7 @@ jobs:
           paths:
             - ./image.tar
 
-  push:
+  publish:
     executor: docker-publisher
     steps:
       - attach_workspace:
@@ -100,7 +100,8 @@ workflows:
       - test
       - coverage
       - build
-      - push:
+      - publish:
+          context: dockerhub
           requires:
             - build
 
