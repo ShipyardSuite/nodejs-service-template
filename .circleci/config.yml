@@ -100,7 +100,9 @@ workflows:
       - test
       - coverage
       - build
-      - push
+      - push:
+          requires:
+            - build
 
 # version: 2.1
 # executors:
