@@ -1,5 +1,7 @@
+'use strict';
+
 const exampleFunction = () => {
-    return "example-service";
+    return process.env.SERVICE_NAME || "testService";
 }
 
 module.exports = { exampleFunction };

@@ -2,10 +2,10 @@
   "name": "nodejs-service-template",
   "version": "0.1.0",
   "description": "service template for nodejs applications.",
-  "main": "src/index.js",
+  "main": "server/index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "start:dev": "nodemon src/index.js",
+    "start": "node server/index.js",
+    "start:dev": "nodemon server/index.js",
     "test": "nyc --reporter=lcov mocha -- -R spec tests/"
   },
   "repository": {
