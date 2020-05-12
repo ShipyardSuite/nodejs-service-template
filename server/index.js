@@ -16,4 +16,4 @@ app.get("/health", (req, res) => {
     })
 });
 
-app.listen(servicePort, () => console.log(`Example app listening at http://localhost:${servicePort}`));
+app.listen(servicePort);
