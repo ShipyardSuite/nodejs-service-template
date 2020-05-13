@@ -41,8 +41,11 @@ jobs:
 
       # upload test coverage...
       - run:
-          name: "upload test coverage"
+          name: "upload test coverage to codecov"
           command: "bash <(curl -s https://codecov.io/bash)"
+      - run: 
+          name: "upload test coverage to codacy"
+          command: "bash <(curl -Ls https://coverage.codacy.com/get.sh)"
 
   build:
     executor: docker-publisher
