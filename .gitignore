@@ -1,4 +1,6 @@
 /node_modules
 /coverage
+/_legacy
 .nyc_output
 .DS_Store
+.env
