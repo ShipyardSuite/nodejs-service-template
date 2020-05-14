@@ -112,7 +112,8 @@ workflows:
             - test
           filters:
             branches:
-              only: /^(?!pull\/).*$/
+              only:
+                - develop
       - publish:
           context: dockerhub
           requires:
