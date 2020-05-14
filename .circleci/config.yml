@@ -44,8 +44,6 @@ jobs:
           name: "upload test coverage to codecov"
           command: "bash <(curl -s https://codecov.io/bash)"
 
-      - coverage-reporter/send_report
-
   build:
     executor: docker-publisher
     steps:
@@ -112,6 +110,9 @@ workflows:
       - build:
           requires:
             - test
+          filters:
+            branches:
+              only: /^(?!pull\/).*$/
       - publish:
           context: dockerhub
           requires:
