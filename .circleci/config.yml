@@ -7,6 +7,7 @@ executors:
       - image: circleci/node:10
 
 jobs:
+
   test:
     executor: docker-publisher
     steps:
@@ -44,7 +45,7 @@ jobs:
           name: "upload test coverage to codecov"
           command: "bash <(curl -s https://codecov.io/bash)"
 
-  build:
+  build-develop:
     executor: docker-publisher
     steps:
       - checkout
@@ -58,7 +59,10 @@ jobs:
       # Build Docker image
       - run:
           name: Build Docker image
-          command: docker build -t $IMAGE_NAME:develop .
+          command: docker build \
+          --build-arg SERVICE_NAME_ARG="testService" \
+          --build-arg HEALTHCHECK_ID_ARG="3a84598d-8dad-4970-8889-9e5c7cd71813" \
+          -t $IMAGE_NAME:develop . 
       
       # Archive Docker image
       - run:
@@ -69,7 +73,7 @@ jobs:
           paths:
             - ./image.tar
 
-  publish:
+  publish-develop:
     executor: docker-publisher
     steps:
       - attach_workspace:
@@ -88,7 +92,7 @@ jobs:
             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
             docker push $IMAGE_NAME:develop
 
-  deploy:
+  deploy-develop:
     executor: docker-publisher
     steps:
 
@@ -96,7 +100,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            echo testtesttest
+            echo testtesttest_on_DEVELOP
 
 
 workflows:
@@ -107,18 +111,34 @@ workflows:
       - coverage:
           requires:
             - test
-      - build:
+      - build-develop:
           requires:
             - test
           filters:
             branches:
               only:
                 - develop
-      - publish:
+      - publish-develop:
           context: dockerhub
           requires:
-            - build
-      - deploy:
+            - build-develop
+      - deploy-develop:
           context: digitalocean-develop
           requires:
-            - publish
+            - publish-develop
+
+      # - build-latest:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - publish-latest:
+      #     context: dockerhub
+      #     requires:
+      #       - build-latest
+      # - deploy-prodiction:
+      #     context: digitalocean-production
+      #     requires:
+      #       - publish-latest
+
+  
