@@ -19,7 +19,6 @@ services:
             SERVICE_PORT: ${SERVICE_PORT}
             SERVICE_NAME: ${SERVICE_NAME}
             HEALTHCHECK_ID: ${HEALTHCHECK_ID}
-            DOCKER_ENV: local
         healthcheck:
             test: curl --fail -s https://hc-ping.com/${HEALTHCHECK_ID} || exit 1
             interval: 20s
