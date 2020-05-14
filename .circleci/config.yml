@@ -59,10 +59,11 @@ jobs:
       # Build Docker image
       - run:
           name: Build Docker image
-          command: docker build \
-          --build-arg SERVICE_NAME_ARG="testService" \
-          --build-arg HEALTHCHECK_ID_ARG="3a84598d-8dad-4970-8889-9e5c7cd71813" \
-          -t $IMAGE_NAME:develop . 
+          command: |
+            docker build \
+            --build-arg SERVICE_NAME_ARG="testService" \
+            --build-arg HEALTHCHECK_ID_ARG="3a84598d-8dad-4970-8889-9e5c7cd71813" \
+            -t $IMAGE_NAME:develop . 
       
       # Archive Docker image
       - run:
