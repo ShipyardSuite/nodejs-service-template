@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = (app, logger, serviceName) => {
     app.get(`/${serviceName}/api/hello`, (req, res) => {

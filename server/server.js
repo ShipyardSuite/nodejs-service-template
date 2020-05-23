@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 import express from "express";
 import path from 'path';
 import fs from 'fs';
-import winston from 'winston';
-import Redis from 'winston-redis';
+import winston from "winston";
+import Redis from "winston-redis";
 
-import { exampleFunction } from './utils/example';
+import { exampleFunction } from "./utils/example";
 
-import ExpressConfig from './config/expressConfig';
-import LoggerConfig from './config/loggerConfig';
+import ExpressConfig from "./config/expressConfig";
+import LoggerConfig from "./config/loggerConfig";
 import DbConfig from "./config/dbConfig";
 
 class App {
@@ -17,7 +17,7 @@ class App {
         this.app = express();
         this.serviceName = exampleFunction();
         this.servicePort = process.env.SERVICE_PORT || 3000;
-        this.database = process.env.DATABASE_URL || "mongodb://mongo:27017/db"
+        this.database = process.env.DATABASE_URL || "mongodb://mongo:27017/db";
         this.logger;
     }
 
@@ -28,8 +28,8 @@ class App {
     }
 
     config() {
-        new ExpressConfig(this.app);
-        new DbConfig(this.database);
+        const expressConfig = new ExpressConfig(this.app);
+        const dBConfig = new DbConfig(this.database);
 
         const loggerConfig = LoggerConfig;
 
@@ -53,7 +53,7 @@ class App {
     }
 
     apiRoutes() {
-        require('./api/helloWorld')(this.app, this.logger, this.serviceName);
+        require("./api/helloWorld")(this.app, this.logger, this.serviceName);
     }
 
     start() {
