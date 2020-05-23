@@ -155,7 +155,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            sh deploy_project.sh
+            docker-compose pull && docker-compose up -d
 
 
 workflows:
