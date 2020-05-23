@@ -155,7 +155,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            sh sh deploy_project.sh
+            sh deploy_project.sh
 
 
 workflows:
