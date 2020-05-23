@@ -55,6 +55,11 @@ jobs:
       - run:
           name: "install dependencies"
           command: "npm install"
+
+      # build application
+      - run:
+          name: "build application"
+          command: "npm run build"
       
       # Build Docker image
       - run:
@@ -150,7 +155,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            echo testtesttest_on_DEVELOP
+            docker-compose pull && docker-compose up -d
 
 
 workflows:
