@@ -155,8 +155,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            cd ../../srv/shipyard-develop/gateway \
-            docker-compose pull && docker-compose up -d
+            sh sh deploy_project.sh
 
 
 workflows:
