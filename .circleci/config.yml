@@ -155,7 +155,7 @@ jobs:
       - run: 
           command: |
             ssh -oStrictHostKeyChecking=no -v circleci@$ip \
-            cd ../../srv/shipyard-develop/gateway
+            cd ../../srv/shipyard-develop/gateway \
             docker-compose pull && docker-compose up -d
 
 
