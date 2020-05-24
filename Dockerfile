@@ -1,4 +1,4 @@
-FROM bitnami/node
+FROM bitnami/node:12
 
 LABEL maintainer="shipyardsuite@gmail.com"
 
