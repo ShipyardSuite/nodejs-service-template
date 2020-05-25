@@ -5,6 +5,7 @@
 ![Codacy branch grade](https://img.shields.io/codacy/grade/d2e0c2bbce094f269372a54aad540edd/develop?label=code%20quality%20&logo=codacy&style=flat-square)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/shipyardsuite/nodejs-service-template/develop?logo=github&style=flat-square)
 ![GitHub issues](https://img.shields.io/github/issues-raw/shipyardsuite/nodejs-service-template?logo=github&style=flat-square)
+![GitHub](https://img.shields.io/github/license/shipyardsuite/nodejs-service-template?style=flat-square)
 
 # nodejs-service-template
 
