@@ -7,6 +7,7 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/shipyardsuite/nodejs-service-template?logo=github&style=flat-square)
 
 # nodejs-service-template
+
 service template for nodejs applications.
 
 ## License
