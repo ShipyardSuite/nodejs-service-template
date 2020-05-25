@@ -1,6 +1,6 @@
 "use strict";
 
-import { hello } from './hello';
+import { hello } from "./hello";
 
 export const routes = {
     hello
