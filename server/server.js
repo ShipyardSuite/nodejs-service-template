@@ -51,7 +51,7 @@ class App {
     }
 
     apiRoutes() {
-        routes.helloWorld(this.app, this.logger, this.serviceName);
+        routes.hello(this.app, this.logger, this.serviceName);
     }
 
     start() {

@@ -1,7 +1,7 @@
 "use strict";
 
-import { helloWorld } from './helloWorld';
+import { hello } from './hello';
 
 export const routes = {
-    helloWorld
+    hello
 };
