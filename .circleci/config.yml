@@ -4,7 +4,7 @@ executors:
     environment:
       IMAGE_NAME: shipyardsuite/nodejs-service-template
     docker:
-      - image: circleci/node:10
+      - image: circleci/node:12
 
 jobs:
 
