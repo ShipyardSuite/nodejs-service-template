@@ -6,9 +6,9 @@ import Redis from "winston-redis";
 
 import { exampleFunction } from "./utils/example";
 
-import ExpressConfig from "./config/expressConfig";
-import LoggerConfig from "./config/loggerConfig";
-import DbConfig from "./config/dbConfig";
+import { LoggerConfig, DBConfig, ExpressConfig } from "./config";
+
+import { routes } from './api/';
 
 class App {
     constructor() {
@@ -27,7 +27,7 @@ class App {
 
     config() {
         const expressConfig = new ExpressConfig(this.app);
-        const dBConfig = new DbConfig(this.database);
+        const dBConfig = new DBConfig(this.database);
 
         const loggerConfig = LoggerConfig;
 
@@ -51,7 +51,7 @@ class App {
     }
 
     apiRoutes() {
-        require("./api/helloWorld")(this.app, this.logger, this.serviceName);
+        routes.helloWorld(this.app, this.logger, this.serviceName);
     }
 
     start() {
