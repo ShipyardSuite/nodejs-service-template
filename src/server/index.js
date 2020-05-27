@@ -1,32 +1,37 @@
-"use strict";
-
-import express from "express";
+import express from 'express';
 import winston from "winston";
 import Redis from "winston-redis";
+import fs from 'fs';
+import path from 'path';
 
 import { exampleFunction } from "./utils/example";
 
-import { LoggerConfig, DBConfig, ExpressConfig } from "./config";
+import { LoggerConfig, DBConfig } from "./config";
 
-import { routes } from "./api/";
+import { routes } from "./api";
 
 class App {
     constructor() {
         this.app = express();
-        this.serviceName = exampleFunction();
+        this.serviceName = 'test';
         this.servicePort = process.env.SERVICE_PORT || 3000;
-        this.database = process.env.DATABASE_URL || "mongodb://mongo:27017/db";
-        this.logger;
+        this.database = process.env.DATABASE_URL || 'mongodb://mongo:27017/db';
+        this.logger = {};
+        this.path = { public: path.resolve(`${__dirname}/../client/`) };
     }
 
     init() {
         this.config();
         this.apiRoutes();
+        this.reactRoutes();
         this.start();
     }
 
     config() {
-        const expressConfig = new ExpressConfig(this.app);
+        this.app.use(express.urlencoded({ extended: true }));
+        this.app.use(express.json());
+        this.app.use(`/${this.serviceName}/public`, express.static(this.path.public));
+
         const dBConfig = new DBConfig(this.database);
 
         const loggerConfig = LoggerConfig;
@@ -54,9 +59,18 @@ class App {
         routes.hello(this.app, this.logger, this.serviceName);
     }
 
+    reactRoutes() {
+        this.app.get('*/', (req, res) => {
+            const content = fs.readFileSync(`${this.path.public}/index.html`).toString();
+            res.set('content-type', 'text/html');
+            res.send(content);
+            res.end();
+        });
+    }
+
     start() {
         this.app.listen(this.servicePort, () => {
-            this.logger.info(`Service "${this.serviceName}" listening on port ${this.servicePort}`);
+            console.log(`server started on port ${this.servicePort}`);
         });
     }
 }
